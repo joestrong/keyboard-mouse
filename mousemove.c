@@ -10,15 +10,21 @@ Window root_window;
 void showDisplay();
 void moveMouse();
 
-int main() {
-	showDisplay();
-	moveMouse();
-	return 1;
+int main(int argc, char *argv[]) {
+	showDisplay(argc, argv);
+	return 0;
 }
 
-void showDisplay() {
-	//GtkWidget* label = gtk_label_new ("A");
-	//gtk_widget_show_all(label);
+void showDisplay(int argc, char *argv[]) {
+	gtk_init (&argc, &argv);
+	GtkWidget* window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	GtkWidget* button = gtk_button_new();
+	gtk_button_set_label((GtkButton*) button, "Click me");
+	g_signal_connect(button, "clicked", G_CALLBACK (moveMouse), button);
+	gtk_container_add(GTK_CONTAINER (window), button);
+	gtk_widget_show  (button);
+	gtk_widget_show  (window);
+	gtk_main ();
 }
 
 void moveMouse() {
